@@ -267,110 +267,11 @@ export default function PropertyRefinanceCalculator() {
               />
             </div>
 
-            <div className="md:col-span-2">
-              <Button
-                onClick={handleCalculate}
-                variant="default"
-                className="w-full bg-[#f17422ff]"
-              >
-                Calculate
-              </Button>
-            </div>
-          </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {result && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-1">
-                      Target Income After Inflation
-                    </h3>
-                    <div className="text-2xl font-bold text-[#f17422ff]">
-                      {formatCurrency(result.inflationAdjustedDesiredIncome)}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-1">
-                      Total out of pocket (TOP) cost today needed to support target income in {result.year} years
-                    </h3>
-                    <div className="text-2xl font-bold text-gray-600">
-                      {formatCurrency(result.TOP)}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">
-                      This TOP allows you to purchase 
-                    </h3>
-                    <div className="text-2xl font-bold text-[#f17422ff]">
-                    {result.initialHomeCount} home(s) today
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">
-                      With refinancing and purchasing more homes during the {result.year} years, the inital {result.initialHomeCount} home(s) are projected to grow to
-                    </h3>
-                    <div className="text-2xl font-bold text-[#f17422ff]">
-                    {result.homes.length} homes
-                    </div>
-                  </CardContent>
-                </Card> 
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">
-                      These {result.homes.length} homes then provide an average monthly income of
-                    </h3>
-                    <div className="text-2xl font-bold text-green-600">
-                      {formatCurrency(result.monthlyIncome)}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">
-                      And a total yearly income of
-                    </h3>
-                    <div className="text-2xl font-bold text-green-600">
-                      {formatCurrency(result.yearlyIncome)}
-                    </div>
-                  </CardContent>
-                </Card>  
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">Your portfolio value after {result.year} years is worth</h3>
-                    <div className="text-2xl font-bold text-blue-600">
-                      {formatCurrency(result.totalPortfolioValue)}
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-4">
-                    <h3 className="font-semibold mb-2">With the total equity built being</h3>
-                    <div className="text-2xl font-bold text-blue-600">
-                      {formatCurrency(result.totalEquity)}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
 
-              {result.homes.length <= 16 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Property Details</h3>
-                  {result.homes.map((property, index) => (
-                    <PropertyCard key={index} property={property} />
-                  ))}
-                </div>
-              )}
 
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion type="single" collapsible className="md:col-span-2 w-full">
                 <AccordionItem value="settings">
                   <AccordionTrigger className="text-sm font-medium">
                     <div className="flex items-center gap-2">
@@ -468,6 +369,119 @@ export default function PropertyRefinanceCalculator() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+
+            
+
+            <div className="md:col-span-2">
+              <Button
+                onClick={handleCalculate}
+                variant="default"
+                className="w-full bg-[#f17422ff]"
+              >
+                Calculate
+              </Button>
+            </div>
+          </div>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          {result && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      Target Income After Inflation
+                    </h3>
+                    <div className="text-xl font-bold text-[#f17422ff]">
+                      {formatCurrency(result.inflationAdjustedDesiredIncome)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      Total out of pocket (TOP) cost today needed to support target income in {result.year} years
+                    </h3>
+                    <div className="text-xl font-bold text-gray-600">
+                      {formatCurrency(result.TOP)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      This TOP allows you to purchase 
+                    </h3>
+                    <div className="text-xl font-bold text-[#f17422ff]">
+                    {result.initialHomeCount} home(s) today
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      With refinancing and purchasing more homes during the {result.year} years, the inital {result.initialHomeCount} home(s) are projected to grow to
+                    </h3>
+                    <div className="text-xl font-bold text-[#f17422ff]">
+                    {result.homes.length} homes
+                    </div>
+                  </CardContent>
+                </Card> 
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      These {result.homes.length} homes then provide an average monthly income of
+                    </h3>
+                    <div className="text-xl font-bold text-green-600">
+                      {formatCurrency(result.monthlyIncome)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
+                      And a total yearly income of
+                    </h3>
+                    <div className="text-xl font-bold text-green-600">
+                      {formatCurrency(result.yearlyIncome)}
+                    </div>
+                  </CardContent>
+                </Card>  
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">Your portfolio value after {result.year} years is worth</h3>
+                    <div className="text-xl font-bold text-blue-600">
+                      {formatCurrency(result.totalPortfolioValue)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">With the total equity built being</h3>
+                    <div className="text-xl font-bold text-blue-600">
+                      {formatCurrency(result.totalEquity)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">Total debt</h3>
+                    <div className="text-xl font-bold text-gray-600">
+                      {formatCurrency(result.totalDebt)}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {result.homes.length <= 16 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Property Details</h3>
+                  {result.homes.map((property, index) => (
+                    <PropertyCard key={index} property={property} />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

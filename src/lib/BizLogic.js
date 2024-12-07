@@ -76,10 +76,12 @@ function incomeFromHomeCountAndYears(initialHomeCount, growthYears, marketCondit
 
     const monthWithdrawlStarts = growthYears * 12;
     let totalPortfolioValue = 0;
-    let totalEquity = 0
+    let totalEquity = 0;
+    let totalDebt = 0;
     for (let home of homes) {
         totalPortfolioValue += home.getCurrentHomeValue(monthWithdrawlStarts);
-        totalEquity += home.getCurrentHomeValue(monthWithdrawlStarts) - home.schedule[monthWithdrawlStarts - home.monthOfLatestMortgageOrRefinance].remainingBalance
+        totalEquity += home.getCurrentHomeValue(monthWithdrawlStarts) - home.schedule[monthWithdrawlStarts - home.monthOfLatestMortgageOrRefinance].remainingBalance;
+        totalDebt += home.schedule[monthWithdrawlStarts - home.monthOfLatestMortgageOrRefinance].remainingBalance;
     }
     const yearlyIncome = totalPortfolioValue * (percentAnnualHomeAppreciation/100) * 0.75;
     const monthlyIncome = yearlyIncome / 12;
@@ -89,6 +91,7 @@ function incomeFromHomeCountAndYears(initialHomeCount, growthYears, marketCondit
         monthWithdrawlStarts: monthWithdrawlStarts,
         totalPortfolioValue: totalPortfolioValue,
         totalEquity: totalEquity,
+        totalDebt: totalDebt,
         yearlyIncome: yearlyIncome,
         monthlyIncome: monthlyIncome,
         homes: homes,
