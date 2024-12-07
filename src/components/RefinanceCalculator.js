@@ -182,7 +182,7 @@ export default function PropertyRefinanceCalculator() {
                 <TableBody>
                   {property.refinanceSchedule.map((refi, index) => (
                     <TableRow key={index}>
-                      <TableCell>Year {Math.floor(refi.month / 12)}</TableCell>
+                      <TableCell>Year {(refi.month / 12).toFixed(1)}</TableCell>
                       <TableCell>{formatCurrency(refi.amount)}</TableCell>
                     </TableRow>
                   ))}
@@ -376,7 +376,7 @@ export default function PropertyRefinanceCalculator() {
               <Button
                 onClick={handleCalculate}
                 variant="default"
-                className="w-full bg-[#f17422ff]"
+                className="w-full text-base bg-[#f17422ff]"
               >
                 Calculate
               </Button>
