@@ -9,7 +9,6 @@ import {
   Calculator,
   Info,
   Settings,
-  ChevronDown,
   Percent,
   DollarSign,
   AlertCircle,
@@ -127,7 +126,7 @@ export default function PropertyRefinanceCalculator() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Home className="w-5 h-5" />
-              <h3 className="font-semibold">Property Details</h3>
+              <h3 className="font-semibold">Property {property.index + 1} Details</h3>
             </div>
             <Table>
               <TableBody>
@@ -200,7 +199,7 @@ export default function PropertyRefinanceCalculator() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="w-6 h-6" />
-          Property-by-Property Refinance Calculator
+          Plan to Achieve Future Income Calculator
         </CardTitle>
         <Alert className="bg-white">
           <AlertCircle className="h-4 w-4" />
@@ -266,10 +265,6 @@ export default function PropertyRefinanceCalculator() {
                 min="1"
               />
             </div>
-
-
-
-
 
               <Accordion type="single" collapsible className="md:col-span-2 w-full">
                 <AccordionItem value="settings">
@@ -369,8 +364,6 @@ export default function PropertyRefinanceCalculator() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-
-            
 
             <div className="md:col-span-2">
               <Button

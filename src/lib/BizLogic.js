@@ -54,7 +54,7 @@ function incomeFromHomeCountAndYears(initialHomeCount, growthYears, marketCondit
 
     let homes = [];
     for (let i = 0; i < initialHomeCount; i++) {
-    homes.push(new House(0, initialHomePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost));
+    homes.push(new House(0, initialHomePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost, homes.length));
     }
 
     for (let month = 1; month <= growthYears*12; month++) {
@@ -64,7 +64,7 @@ function incomeFromHomeCountAndYears(initialHomeCount, growthYears, marketCondit
         if (growthYears*12 - month > 24) { // if we are within two and a half years of the withdrawl stage we should stop buy homes
         if (home.getPossibleRefinancePayout(month) > currentHomePrice * fractionOfHomePriceToGetIn) {
             let payout = home.doARefinance(month, percentAnnualInterestRate, percentDownPayment, loanTermYears); //adjusts values in the house object
-            newHomesAddedThisMonth.push(new House(month, initialHomePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost));
+            newHomesAddedThisMonth.push(new House(month, initialHomePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost, homes.length+newHomesAddedThisMonth.length));
             refinanceSpillOver += (payout - currentHomePrice);
         }
         }

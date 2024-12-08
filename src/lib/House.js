@@ -1,7 +1,8 @@
 import AmortizationCalculator from './AmortizationCalculator.js';
 
 class House {
-    constructor(monthOfPurchase, homePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost) {
+    constructor(monthOfPurchase, homePrice, percentAnnualHomeAppreciation, percentDownPayment, percentAnnualInterestRate, loanTermYears, refinanceCost, index) {
+        this.index = index;
         this.monthOfPurchase = monthOfPurchase;
         this.monthOfLatestMortgageOrRefinance = monthOfPurchase;
         this.initialHomePrice = homePrice; // intitalHomePrice refers to the home price set in the overall simulation settings not at the time of purchase unless this is an original home. Sorry about that yall
