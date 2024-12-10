@@ -444,7 +444,7 @@ export default function PropertyRefinanceCalculator() {
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">Your portfolio value after {result.year} years is worth</h3>
-                    <div className="text-xl font-bold text-blue-600">
+                    <div className="text-xl font-bold text-[#607091]">
                       {formatCurrency(result.totalPortfolioValue)}
                     </div>
                   </CardContent>
@@ -452,7 +452,7 @@ export default function PropertyRefinanceCalculator() {
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">With the total equity built being</h3>
-                    <div className="text-xl font-bold text-blue-600">
+                    <div className="text-xl font-bold text-[#607091]">
                       {formatCurrency(result.totalEquity)}
                     </div>
                   </CardContent>
