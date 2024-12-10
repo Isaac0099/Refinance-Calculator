@@ -59,8 +59,8 @@ export default function PropertyRefinanceCalculator() {
 
   const handleCalculate =  () => {
     setError("");
-    if (!monthlyIncome || monthlyIncome <= 0) {
-      setError("Please enter a valid monthly income target");
+    if (!monthlyIncome || monthlyIncome <= 0 || monthlyIncome > 100_000) {
+      setError("Please enter a valid target monthly income between $1 and $100,000");
       return;
     }
     if (!yearsAhead || yearsAhead < 5 || yearsAhead > 100) {
