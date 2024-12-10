@@ -414,6 +414,16 @@ export default function PropertyRefinanceCalculator() {
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
+                      Providing an intital portfolio value of 
+                    </h3>
+                    <div className="text-xl font-bold text-[#f17422ff]">
+                    {formatCurrency(result.initialHomeCount * homePrice)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="pt-4 pb-4">
+                    <h3 className="font-semibold mb-1">
                       With refinancing and purchasing more homes during the {result.year} years, the inital {result.initialHomeCount} home(s) are projected to grow to
                     </h3>
                     <div className="text-xl font-bold text-[#f17422ff]">
