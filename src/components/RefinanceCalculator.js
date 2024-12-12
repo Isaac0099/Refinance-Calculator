@@ -37,6 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { FormattedNumberInput } from "@/components/ui/formattedNumberInput";
 
 export default function PropertyRefinanceCalculator() {
   // Core state
@@ -233,13 +234,31 @@ export default function PropertyRefinanceCalculator() {
               </Label>
               <div className="relative">
                 <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
-                <Input
+                {/* <Input
                   type="number"
                   value={monthlyIncome}
                   onChange={(e) => setMonthlyIncome(e.target.value)}
                   placeholder="Enter target monthly income"
                   className="pl-9"
                   min="0"
+                /> */}
+                <Input
+                  type="text"
+                  value={monthlyIncome ? Number(monthlyIncome).toLocaleString() : ''}
+                  onChange={(e) => {
+                    //remove commas and convert to number
+                    const rawValue = e.target.value.replace(/,/g, '');
+                    setMonthlyIncome(rawValue);
+                  }}
+                  placeholder="Enter target monthly income"
+                  className="pl-9"
+                  min="0"
+                  // preventing non numeric input
+                  onKeyPress={(e) => {
+                    if (!/[\d.]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </div> 
