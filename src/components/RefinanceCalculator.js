@@ -1,6 +1,6 @@
 "use client";
 
-import propertyRequirementCalculation from '../lib/BizLogic.js'
+import propertyRequirementCalculation from "../lib/BizLogic.js";
 import React, { useState, useMemo } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -51,16 +51,17 @@ export default function PropertyRefinanceCalculator() {
   const [propertyAppreciation, setPropertyAppreciation] = useState(5.0);
   const [refinanceCost, setRefinanceCost] = useState(7000);
   const [loanTermYears, setLoanTermYears] = useState(30);
-  const [inflationRate, setInflationRate] = useState(2.5)
+  const [inflationRate, setInflationRate] = useState(2.5);
 
   // Calculated property data
   const [properties, setProperties] = useState([]);
 
-
-  const handleCalculate =  () => {
+  const handleCalculate = () => {
     setError("");
     if (!monthlyIncome || monthlyIncome <= 0 || monthlyIncome > 100_000) {
-      setError("Please enter a valid target monthly income between $1 and $100,000");
+      setError(
+        "Please enter a valid target monthly income between $1 and $100,000"
+      );
       return;
     }
     if (!yearsAhead || yearsAhead < 5 || yearsAhead > 100) {
@@ -71,19 +72,27 @@ export default function PropertyRefinanceCalculator() {
       setError("Please enter a home price between $100,000 and $5,000,000");
       return;
     }
-    if (!downPaymentPercent || downPaymentPercent < 1 || downPaymentPercent > 99) {
+    if (
+      !downPaymentPercent ||
+      downPaymentPercent < 1 ||
+      downPaymentPercent > 99
+    ) {
       setError("Please enter down payment percent between 1 and 99");
       return;
     }
-    if (!propertyAppreciation || propertyAppreciation < 1 || propertyAppreciation > 100) {
+    if (
+      !propertyAppreciation ||
+      propertyAppreciation < 1 ||
+      propertyAppreciation > 100
+    ) {
       setError("Please enter an appreciation rate between 1 and 100 percent");
       return;
-    } 
+    }
     if (!refinanceCost || refinanceCost < 0) {
       setError("Please enter a refinance cost of 0 or greater");
       return;
     }
-    
+
     try {
       const marketConditions = {
         initialHomePrice: homePrice,
@@ -92,12 +101,15 @@ export default function PropertyRefinanceCalculator() {
         loanTermYears: loanTermYears,
         percentAnnualInterestRate: 6.5,
         refinanceCost: refinanceCost,
-        inflationRate: inflationRate
+        inflationRate: inflationRate,
       };
-      const result = propertyRequirementCalculation(monthlyIncome, yearsAhead, marketConditions);
+      const result = propertyRequirementCalculation(
+        monthlyIncome,
+        yearsAhead,
+        marketConditions
+      );
 
-
-      if(result.error){
+      if (result.error) {
         setError(result.message);
         return;
       }
@@ -126,38 +138,55 @@ export default function PropertyRefinanceCalculator() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Home className="w-5 h-5" />
-              <h3 className="font-semibold">Property {property.index + 1} Details</h3>
+              <h3 className="font-semibold">
+                Property {property.index + 1} Details
+              </h3>
             </div>
             <Table>
               <TableBody>
-              <TableRow>
+                <TableRow>
                   <TableCell>Month of Purchase</TableCell>
-                  <TableCell>
-                    {property.monthOfPurchase}
-                  </TableCell>
+                  <TableCell>{property.monthOfPurchase}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Purchase Price</TableCell>
                   <TableCell>
-                    {formatCurrency(property.getCurrentHomeValue(property.monthOfPurchase))}
+                    {formatCurrency(
+                      property.getCurrentHomeValue(property.monthOfPurchase)
+                    )}
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Current Value</TableCell>
-                  <TableCell>{formatCurrency(property.getCurrentHomeValue(result.monthWithdrawlStarts))}</TableCell>
+                  <TableCell>
+                    {formatCurrency(
+                      property.getCurrentHomeValue(result.monthWithdrawlStarts)
+                    )}
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Current Equity</TableCell>
                   <TableCell>
                     {formatCurrency(
-                      property.getCurrentHomeValue(result.monthWithdrawlStarts)- property.schedule[result.monthWithdrawlStarts - property.monthOfLatestMortgageOrRefinance].remainingBalance
+                      property.getCurrentHomeValue(
+                        result.monthWithdrawlStarts
+                      ) -
+                        property.schedule[
+                          result.monthWithdrawlStarts -
+                            property.monthOfLatestMortgageOrRefinance
+                        ].remainingBalance
                     )}
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Monthly Mortgage</TableCell>
                   <TableCell>
-                    {formatCurrency(property.schedule[result.year*12 - property.monthOfLatestMortgageOrRefinance].paymentAmount)}
+                    {formatCurrency(
+                      property.schedule[
+                        result.year * 12 -
+                          property.monthOfLatestMortgageOrRefinance
+                      ].paymentAmount
+                    )}
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -235,10 +264,12 @@ export default function PropertyRefinanceCalculator() {
                 <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
                 <Input
                   type="text"
-                  value={monthlyIncome ? Number(monthlyIncome).toLocaleString() : ''}
+                  value={
+                    monthlyIncome ? Number(monthlyIncome).toLocaleString() : ""
+                  }
                   onChange={(e) => {
                     //remove commas and convert to number
-                    const rawValue = e.target.value.replace(/,/g, '');
+                    const rawValue = e.target.value.replace(/,/g, "");
                     setMonthlyIncome(rawValue);
                   }}
                   placeholder="Enter target monthly income"
@@ -246,13 +277,17 @@ export default function PropertyRefinanceCalculator() {
                   min="0"
                   // preventing non numeric input
                   onKeyPress={(e) => {
-                    if (!/[\d.]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                    if (
+                      !/[\d.]/.test(e.key) &&
+                      e.key !== "Backspace" &&
+                      e.key !== "Delete"
+                    ) {
                       e.preventDefault();
                     }
                   }}
                 />
               </div>
-            </div> 
+            </div>
 
             <div>
               <Label className="flex items-center gap-2">
@@ -276,104 +311,138 @@ export default function PropertyRefinanceCalculator() {
               />
             </div>
 
-              <Accordion type="single" collapsible className="md:col-span-2 w-full">
-                <AccordionItem value="settings">
-                  <AccordionTrigger className="text-sm font-medium">
-                    <div className="flex items-center gap-2">
-                      <Settings className="w-4 h-4" />
-                      Advanced Settings
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                      <div>
-                        <Label>Home Price</Label>
-                        <div className="relative">
-                          <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
-                          <Input
-                            type="number"
-                            value={homePrice}
-                            onChange={(e) =>
-                              setHomePrice(parseFloat(e.target.value))
-                            }
-                            className="pl-9"
-                            min="0"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label>Down Payment (%)</Label>
-                        <div className="relative">
-                          <Percent className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
-                          <Input
-                            type="number"
-                            value={downPaymentPercent}
-                            onChange={(e) =>
-                              setDownPaymentPercent(parseFloat(e.target.value))
-                            }
-                            min="0"
-                            max="100"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label>Annual Appreciation (%)</Label>
-                        <div className="relative">
-                          <Percent className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
-                          <Input
-                            type="number"
-                            value={propertyAppreciation}
-                            onChange={(e) =>
-                              setPropertyAppreciation(
-                                parseFloat(e.target.value)
-                              )
-                            }
-                            step="0.1"
-                            min="0"
-                          />
-                        </div>
-                      </div> 
-                      <div>
-                        <Label>Inflation Rate (%)</Label>
+            <Accordion
+              type="single"
+              collapsible
+              className="md:col-span-2 w-full"
+            >
+              <AccordionItem value="settings">
+                <AccordionTrigger className="text-sm font-medium">
+                  <div className="flex items-center gap-2">
+                    <Settings className="w-4 h-4" />
+                    Advanced Settings
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <div>
+                      <Label>Home Price</Label>
+                      <div className="relative">
+                        <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
                         <Input
-                          type="number"
-                          value={inflationRate}
-                          onChange={(e) =>
-                            setInflationRate(parseFloat(e.target.value))
+                          type="text"
+                          value={
+                            homePrice ? Number(homePrice).toLocaleString() : ""
                           }
-                          min="1"
-                        />
-                      </div>
-                      <div>
-                        <Label>Refinance Cost</Label>
-                        <div className="relative">
-                          <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
-                          <Input
-                            type="number"
-                            value={refinanceCost}
-                            onChange={(e) =>
-                              setRefinanceCost(parseFloat(e.target.value))
+                          onChange={(e) => {
+                            //remove commas and convert to number
+                            const rawValue = e.target.value.replace(/,/g, "");
+                            setHomePrice(rawValue);
+                          }}
+                          placeholder="Enter target monthly income"
+                          className="pl-9"
+                          min="0"
+                          // preventing non numeric input
+                          onKeyPress={(e) => {
+                            if (
+                              !/[\d.]/.test(e.key) &&
+                              e.key !== "Backspace" &&
+                              e.key !== "Delete"
+                            ) {
+                              e.preventDefault();
                             }
-                            className="pl-9"
-                            min="0"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label>Loan Term (Years)</Label>
-                        <Input
-                          type="number"
-                          value={loanTermYears}
-                          onChange={(e) =>
-                            setLoanTermYears(parseFloat(e.target.value))
-                          }
-                          min="1"
+                          }}
                         />
                       </div>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                    <div>
+                      <Label>Down Payment (%)</Label>
+                      <div className="relative">
+                        <Percent className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
+                        <Input
+                          type="number"
+                          value={downPaymentPercent}
+                          onChange={(e) =>
+                            setDownPaymentPercent(parseFloat(e.target.value))
+                          }
+                          min="0"
+                          max="100"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Annual Appreciation (%)</Label>
+                      <div className="relative">
+                        <Percent className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
+                        <Input
+                          type="number"
+                          value={propertyAppreciation}
+                          onChange={(e) =>
+                            setPropertyAppreciation(parseFloat(e.target.value))
+                          }
+                          step="0.1"
+                          min="0"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Inflation Rate (%)</Label>
+                      <Input
+                        type="number"
+                        value={inflationRate}
+                        onChange={(e) =>
+                          setInflationRate(parseFloat(e.target.value))
+                        }
+                        min="1"
+                      />
+                    </div>
+                    <div>
+                      <Label>Refinance Cost</Label>
+                      <div className="relative">
+                        <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
+                        <Input
+                          type="text"
+                          value={
+                            refinanceCost
+                              ? Number(refinanceCost).toLocaleString()
+                              : ""
+                          }
+                          onChange={(e) => {
+                            //remove commas and convert to number
+                            const rawValue = e.target.value.replace(/,/g, "");
+                            setRefinanceCost(rawValue);
+                          }}
+                          //placeholder="Enter target monthly income"
+                          className="pl-9"
+                          min="0"
+                          // preventing non numeric input
+                          onKeyPress={(e) => {
+                            if (
+                              !/[\d.]/.test(e.key) &&
+                              e.key !== "Backspace" &&
+                              e.key !== "Delete"
+                            ) {
+                              e.preventDefault();
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Loan Term (Years)</Label>
+                      <Input
+                        type="number"
+                        value={loanTermYears}
+                        onChange={(e) =>
+                          setLoanTermYears(parseFloat(e.target.value))
+                        }
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
             <div className="md:col-span-2">
               <Button
@@ -391,7 +460,7 @@ export default function PropertyRefinanceCalculator() {
           {result && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <Card>
+                <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
                       Target Income After Inflation
@@ -404,7 +473,8 @@ export default function PropertyRefinanceCalculator() {
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
-                      Total out of pocket (TOP) cost today needed to support target income in {result.year} years
+                      Total out of pocket (TOP) cost today needed to support
+                      target income in {result.year} years
                     </h3>
                     <div className="text-xl font-bold text-gray-600">
                       {formatCurrency(result.TOP)}
@@ -414,37 +484,40 @@ export default function PropertyRefinanceCalculator() {
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
-                      This TOP allows you to purchase 
+                      This TOP allows you to purchase
                     </h3>
                     <div className="text-xl font-bold text-[#f17422ff]">
-                    {result.initialHomeCount} home(s) today
+                      {result.initialHomeCount} home(s) today
                     </div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
-                      Providing an intital portfolio value of 
+                      Providing an intital portfolio value of
                     </h3>
                     <div className="text-xl font-bold text-[#f17422ff]">
-                    {formatCurrency(result.initialHomeCount * homePrice)}
+                      {formatCurrency(result.initialHomeCount * homePrice)}
                     </div>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
-                      With refinancing and purchasing more homes during the {result.year} years, the inital {result.initialHomeCount} home(s) are projected to grow to
+                      With refinancing and purchasing more homes during the{" "}
+                      {result.year} years, the inital {result.initialHomeCount}{" "}
+                      home(s) are projected to grow to
                     </h3>
                     <div className="text-xl font-bold text-[#f17422ff]">
-                    {result.homes.length} homes
+                      {result.homes.length} homes
                     </div>
                   </CardContent>
-                </Card> 
+                </Card>
                 <Card>
                   <CardContent className="pt-4 pb-4">
                     <h3 className="font-semibold mb-1">
-                      These {result.homes.length} homes then provide an average monthly income of
+                      These {result.homes.length} homes then provide an average
+                      monthly income of
                     </h3>
                     <div className="text-xl font-bold text-green-600">
                       {formatCurrency(result.monthlyIncome)}
@@ -460,10 +533,12 @@ export default function PropertyRefinanceCalculator() {
                       {formatCurrency(result.yearlyIncome)}
                     </div>
                   </CardContent>
-                </Card>  
+                </Card>
                 <Card>
                   <CardContent className="pt-4 pb-4">
-                    <h3 className="font-semibold mb-1">Your portfolio value after {result.year} years is worth</h3>
+                    <h3 className="font-semibold mb-1">
+                      Your portfolio value after {result.year} years is worth
+                    </h3>
                     <div className="text-xl font-bold text-[#607091]">
                       {formatCurrency(result.totalPortfolioValue)}
                     </div>
@@ -471,7 +546,9 @@ export default function PropertyRefinanceCalculator() {
                 </Card>
                 <Card>
                   <CardContent className="pt-4 pb-4">
-                    <h3 className="font-semibold mb-1">With the total equity built being</h3>
+                    <h3 className="font-semibold mb-1">
+                      With the total equity built being
+                    </h3>
                     <div className="text-xl font-bold text-[#607091]">
                       {formatCurrency(result.totalEquity)}
                     </div>
@@ -489,7 +566,9 @@ export default function PropertyRefinanceCalculator() {
 
               {result.homes.length <= 16 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Property Details</h3>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Property Details
+                  </h3>
                   {result.homes.map((property, index) => (
                     <PropertyCard key={index} property={property} />
                   ))}
